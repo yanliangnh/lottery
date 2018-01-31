@@ -1,0 +1,69 @@
+@charset "UTF-8";
+blockquote,body,button,dd,dl,fieldset,form,h1,h2,h3,h4,h5,h6,input,legend,menu,ol,p,pre,table,td,textarea,th,ul{margin:0;padding:0}
+a{text-decoration:none;color:#333}
+li{list-style:none}
+body{font-family:Microsoft YaHei;}
+.clear:after{content:".";clear:both;display:block;height:0;overflow:hidden;visibility:hidden}
+
+.board{height:735px;background:-webkit-gradient(linear,left top,left bottom,from(#4e0b7d),to(#e72b26));background:linear-gradient(#4e0b7d,#e72b26);position:relative;overflow:hidden}
+
+.wuyou{width:100%;height:1140px;background:url(../images/wuyou.jpg) no-repeat center 0;}
+.wuyou_main{width:1368px;height:939px;padding-top:201px;margin:0 auto;background:url(../images/wuyou_main.png) no-repeat center 0;}
+.wuyou_01{width:890px;height:559px;padding:66px 50px 0;margin:0 auto;background:url(../images/wuyou_01.png) no-repeat center 0;margin-top: 40px;}
+.wuyou_top{width:890px;height:420px;margin:0 auto;}
+#lottery{float: left;width:562px;height:410px;margin:0px auto;}
+#lottery ul{background-color:yellow;}
+#lottery ul li{float: left;position:relative;width:181px;height:132px;text-align:center;color:#333;margin-right: 9px;margin-bottom:8px;font-index:-999;}
+#lottery ul li.nomg{margin-right:0;}
+#lottery ul li img{display:block;width:181px;height:132px;}
+#lottery ul li a{width:181px;height:132px;display:block;text-decoration:none;background:url(../images/lottery1.png) no-repeat center 0;}
+#lottery ul li a:hover{background-image:url(../images/lottery2.png);}
+#lottery ul li.active .mask{display:block;}
+.mask{
+    width:100%;
+    height:100%;
+    position:absolute;
+    left:0;
+    top:0;
+    background-image: url(../images/mask.png);
+    /*background: #ea0000;*/
+   /* background-color: rgba(222,255,255,0.5);
+    filter:Alpha(opacity=50);*/
+    display:none;
+}
+.wuyou_right{float: right;width:300px;height:414px;background:url(../images/wuyou_right.png) no-repeat center 0;}
+.wuyou_right h3{width:296px;height:60px;line-height: 60px;text-align: center;font-size: 20px;color:#f24119;}
+.wyright_main_no{width:273px;height:214px;margin:20px 0 0 12px;border-bottom: 1px dashed #ecdfb6;display: none;}
+.wyright_main_no p{font-size: 18px;text-align: center;padding-top: 100px;}
+.wyright_main{width:273px;height:214px;margin:20px 0 0 12px;}
+.wyright_main .gundong{width:273px;height:214px;overflow:hidden;}
+.wyright_main ul li{font-size: 14px;width:272px;height:26px;line-height: 26px;margin-bottom: 8px;background: #fceec0;}
+.wyright_main ul li div{float: left;text-align: center;}
+.wyright_main ul li .list1{width:80px;}
+.wyright_main ul li .list2{width:90px;}
+.wyright_main ul li .list3{width:102px;color:#f30006;}
+
+.wyright_bottom{margin-top: 16px;margin-left: 12px;}
+.wyright_bottom p{font-size: 14px;color:#4b3f16;line-height: 24px;}
+.wuyou_bottom{width:397px;height:49px;line-height: 49px;text-align: center;font-size: 24px;font-weight: bold;color:#fff;margin:15px auto 0;background:url(../images/wuyou_bottom.png) no-repeat center 0;}
+.wuyou_bottom span{display:inline-block;width:28px;text-align: center;color:#ffff00;}
+.wuyou_02{width:990px;height:236px;background: #fceec0;margin:24px auto 0;}
+.wuyou_02 h3{height:58px;line-height: 58px;font-size: 24px;text-align: center;color:#d3233b;}
+.wuyou_02_main{width:896px;height:120px;padding:20px;margin:0 auto;background: #e03e42;}
+.wuyou_02_main .gundong{width:895px;height:120px;overflow: hidden;}
+.wuyou_02_main .gundong ul{width:100%;}
+.wuyou_02_main .gundong ul li{margin-top:24px;height:24px;line-height: 24px;}
+.wuyou_02_main .gundong ul li span{float: left;display:block;font-size: 14px;width:274px;height:24px;line-height: 24px;text-align: center;color:#fff;margin-right: 35px;background:rgba(138,6,10,0.23);filter:Alpha(opacity=23);}
+.wuyou_02_main .gundong ul li .nomg{margin-right:0;}
+
+
+/*弹窗*/
+.modal{background:rgba(0, 0, 0, 0.3); position:fixed; left:0; top:0; right:0; bottom:0; z-index:1000;display: none;}
+.box{width:420px;height:244px;background:url(../images/modal.png) no-repeat 0 0;position:absolute;left:50%; top:50%;margin-left:-210px;margin-top:-122px;}
+.modal h3{font-size: 30px;height:60px;line-height: 60px;text-align: center;color:#f24119;}
+.modal p{font-size: 16px;text-align: center;margin:45px 0 28px 0;}
+.modal a{display:block;width:132px;height:38px;line-height: 38px;text-align: center;background: #f24119;border-radius:3px;font-size: 18px;color:#fff;margin:0 auto;}
+.modal a:hover{background: #d5340f;}
+.modal_close{width:38px; height:38px;position:absolute;right:-15px;top:-20px;background:url(../images/modal_close.png) no-repeat 0 0;cursor:pointer;}
+
+.modal2 p,.modal3 p{font-size: 16px;text-align: center;margin:110px 0 28px 0;}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>活动页面</title>
+    <link rel="stylesheet" href="css/index.css">
+    <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+</head>
+<body>
+
+<div class="board">
+
+            <div class="wuyou_01">
+                <div class="wuyou_top cleaFix">
+                    <div id="lottery">
+                        <ul>
+                            <li class="lottery-unit lottery-unit-0">
+                                <img src="images/gift0.jpg">
+                                <div class="mask"></div>
+                            </li>
+                            <li class="lottery-unit lottery-unit-1">
+                                <img src="images/gift1.jpg">
+                                <div class="mask"></div>
+                            </li>
+                            <li class="lottery-unit lottery-unit-2 nomg">
+                                <img src="images/gift2.jpg">
+                                <div class="mask"></div>
+                            </li>
+                            <li class="lottery-unit lottery-unit-7">
+                                <img src="images/gift3.jpg">
+                                <div class="mask"></div>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="xiaoN" id="logft"></a>
+                            </li>
+                            <li class="lottery-unit lottery-unit-3 nomg">
+                                <img src="images/gift2.jpg">
+                                <div class="mask"></div>
+                            </li>
+                            <li class="lottery-unit lottery-unit-6">
+                                <img src="images/gift2.jpg">
+                                <div class="mask"></div>
+                            </li>
+                            <li class="lottery-unit lottery-unit-5">
+                                <img src="images/gift7.jpg">
+                                <div class="mask"></div>
+                            </li>
+                            <li class="lottery-unit lottery-unit-4 nomg">
+                                <img src="images/gift8.jpg">
+                                <div class="mask"></div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="wuyou_right">
+                        <h3>我的奖品</h3>
+                        <div class="wyright_main">
+                            <ul id="myjiangpin">
+                            </ul>
+                        </div>
+                        <div class="wyright_main_no">
+                            <p>您还没有中奖信息！</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="wuyou_bottom">您还有
+                    <span class="playnum">0</span>次抽奖机会</div>
+            </div>
+            
+</div>
+    
+    <!-- 弹窗 -->
+    <div class="modal modal1">
+			<div class="box">
+				<h3>哇！恭喜你，中奖啦！</h3>
+				<p>恭喜获得<span id="prize">**</span>！</p>
+				<a href="javascript:void(0);" class="xiaoN">立即兑奖</a>
+				<div class="modal_close"></div>
+			</div>
+		</div>
+		<div class="modal modal2">
+			<div class="box">
+				<p>亲！谢谢参与哦！</p>
+				<div class="modal_close"></div>
+			</div>
+		</div>
+		<div class="modal modal3">
+			<div class="box">
+				<p>您今天的抽奖机会已用完了，明日再来吧！</p>
+				<div class="modal_close"></div>
+			</div>
+		</div>
+
+    <script src="js/index.js"></script>
+</body>
+
+</html>
