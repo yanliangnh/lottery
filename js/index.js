@@ -16,7 +16,6 @@ var lottery = {
         if ($("#" + id).find(".lottery-unit").length > 0) {
 
             $lottery = $("#" + id);
-            console.log($lottery);
             $units = $lottery.find(".lottery-unit");
             this.obj = $lottery;
             this.count = $units.length;
@@ -47,7 +46,7 @@ var lottery = {
 
 function roll() {
     lottery.times += 1;
-    lottery.roll(); //转动过程调用的是lottery的roll方法，这里是第一次调用初始化
+    lottery.roll(); //转动过程调用的是lottery的roll方法，这里是第一次调用初始化	
     if (lottery.times > lottery.cycle + 10 && lottery.prize == lottery.index) {
         clearTimeout(lottery.timer);
         lottery.prize = -1;
@@ -145,7 +144,6 @@ $(function() {
             if (objGift.clickTag) { //click控制一次抽奖过程中不能重复点击抽奖按钮，后面的点击不响应
                 return false;
             } else {
-
                 lottery.speed = 100;
                 //过程不响应click事件，会将objGift.clickTag置为false
                 objGift.clickTag = true; //一次抽奖完成后，设置objGift.clickTag为true，可继续抽奖
@@ -159,7 +157,6 @@ $(function() {
                             setmyjiangpin();
                             lottery.prize = data.prize;
                             roll();
-                            objGift.clickTag = true;
                         }, "json");
 
                     objGift.playnum = objGift.playnum - 1; //执行转盘了则次数减1
