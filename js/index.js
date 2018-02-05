@@ -165,7 +165,7 @@ var draw = new Lottery({
     id: '#lottery', //整个活动选择器控件
     awardsSelector: '.lottery-unit', //奖项选择器
     drawButton: '#logft', //点击抽奖按钮的选择器
-    notWin: '7',
+    notWin: '7', //空奖的值
     nanNum: function() { //当抽奖次数为0的时候执行
         $('.modal3').show();
     },
