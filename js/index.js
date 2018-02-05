@@ -18,7 +18,7 @@
         cycle: 50, //转动基本次数：即至少需要转动多少次再进入抽奖环节
         prize: -1, //中奖位置
         selector: '', //选择器
-        notWin: 7, //空奖的值
+        // notWin: 7, //空奖的值
         slowMotion: 10, //开奖最后阶段的渐慢动作个数
         init: function(id) { //程序初始化
             var that = this,
@@ -165,6 +165,7 @@ var draw = new Lottery({
     id: '#lottery', //整个活动选择器控件
     awardsSelector: '.lottery-unit', //奖项选择器
     drawButton: '#logft', //点击抽奖按钮的选择器
+    notWin: '7',
     nanNum: function() { //当抽奖次数为0的时候执行
         $('.modal3').show();
     },
@@ -183,7 +184,7 @@ var draw = new Lottery({
         $('.playnum').html(that.playnum);
     },
     winElart: function(that) { //显示弹窗
-        if (that.prize == that.notWin) {
+        if (that.prize == that.extendConfig.notWin) {
             setTimeout("$('.modal2').show();", 2600);
         } else {
             setTimeout("$('.modal1').show();", 2600);
