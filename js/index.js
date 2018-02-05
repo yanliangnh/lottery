@@ -26,10 +26,88 @@
                 config = args[0],
                 getType = Object.prototype.toString,
                 defaultConfig = {
-                    id: '#lottery', //控件id
+                    id: '#lottery', //整个活动选择器控件
                     awardsSelector: '.lottery-unit', //奖项选择器
-                    omg: function() {
-
+                    drawButton: '#logft', //点击抽奖按钮的选择器
+                    notWin: '7', //空奖的值
+                    nanNum: function() { //当抽奖次数为0的时候执行
+                        $('.modal3').show();
+                    },
+                    okNum: function(that) { //当还有抽奖次数的时候执行
+                        $.get("/json/currentPrize.json?v=" + new Date().getTime(), null,
+                            function(data) { //获取奖品
+                                $("#prize").html(data.MiaoShu);
+                                that.extendConfig.setmyjiangpin.call(null);
+                                that.prize = data.prize;
+                                that.roll();
+                            }, "json");
+                        that.playnum = that.playnum - 1; //执行转盘了则次数减1
+                        if (that.playnum <= 0) {
+                            that.playnum = 0;
+                        }
+                        $('.playnum').html(that.playnum);
+                    },
+                    winElart: function(that) { //显示弹窗
+                        if (that.prize == that.extendConfig.notWin) {
+                            setTimeout("$('.modal2').show();", 2600);
+                        } else {
+                            setTimeout("$('.modal1').show();", 2600);
+                        }
+                    },
+                    isLogin: function() { //检测是否登陆function
+                        var islogin = false;
+                        $.ajaxSetup({ //设置get同步请求
+                            async: false
+                        });
+                        $.get("/json/login.json?v=" + new Date().getTime(), null,
+                            function(data) {
+                                if (data.result == 'ok') {
+                                    islogin = true;
+                                }
+                            }, "json");
+                        return islogin;
+                    },
+                    loadingGet: function(e) { //初始化加载ing...
+                        //弹窗关闭
+                        $('.modal_close').on('click', function() {
+                            $('.modal').hide();
+                        });
+                        $.get("/json/login.json?v=" + new Date().getTime(), null,
+                            function(data) {
+                                if (data !== null && data.result == "ok") {
+                                    e.playnum = data.shengyu; //初始次数，由后台传入
+                                    $('.playnum').html(e.playnum);
+                                }
+                                return false;
+                            }, "json");
+                    },
+                    setmyjiangpin: function() { //显示我获得的奖品
+                        $.get("/json/myPrize.json?v=" + new Date().getTime(), null,
+                            function(data) {
+                                if (data !== null) {
+                                    var lis = "";
+                                    if (data.JiangXiangMingCheng1 && data.JiangXiangMingCheng1 != "谢谢参与") {
+                                        lis += '<li><div class="list1">' + data.MM1 + '月' + data.Day1 + '日</div><div class="list2">' + data.JiangXiangMingCheng1 + '</div><div class="list3">' + data.MiaoShu1 + '</div></li>';
+                                    }
+                                    if (data.JiangXiangMingCheng2 && data.JiangXiangMingCheng2 != "谢谢参与") {
+                                        lis += '<li><div class="list1">' + data.MM2 + '月' + data.Day2 + '日</div><div class="list2">' + data.JiangXiangMingCheng2 + '</div><div class="list3">' + data.MiaoShu2 + '</div></li>';
+                                    }
+                                    if (data.JiangXiangMingCheng3 && data.JiangXiangMingCheng3 != "谢谢参与") {
+                                        lis += '<li><div class="list1">' + data.MM3 + '月' + data.Day3 + '日</div><div class="list2">' + data.JiangXiangMingCheng3 + '</div><div class="list3">' + data.MiaoShu3 + '</div></li>';
+                                    }
+                                    if (data.JiangXiangMingCheng4 && data.JiangXiangMingCheng4 != "谢谢参与") {
+                                        lis += '<li><div class="list1">' + data.MM4 + '月' + data.Day4 + '日</div><div class="list2">' + data.JiangXiangMingCheng4 + '</div><div class="list3">' + data.MiaoShu4 + '</div></li>';
+                                    }
+                                    if (data.JiangXiangMingCheng5 && data.JiangXiangMingCheng5 != "谢谢参与") {
+                                        lis += '<li><div class="list1">' + data.MM5 + '月' + data.Day5 + '日</div><div class="list2">' + data.JiangXiangMingCheng5 + '</div><div class="list3">' + data.MiaoShu5 + '</div></li>';
+                                    }
+                                    if (data.JiangXiangMingCheng6 && data.JiangXiangMingCheng6 != "谢谢参与") {
+                                        lis += '<li><div class="list1">' + data.MM6 + '月' + data.Day6 + '日</div><div class="list2">' + data.JiangXiangMingCheng6 + '</div><div class="list3">' + data.MiaoShu6 + '</div></li>';
+                                    }
+                                    $("#myjiangpin").html(lis);
+                                }
+                                return false;
+                            }, "json");
                     }
                 };
             that.extendConfig = that.util.extend({}, config, defaultConfig) //模拟jquery的$.extend;
@@ -158,91 +236,92 @@
 })(window);
 
 
+//默认参数快捷调用方法：
+var draw2 = new Lottery();
 
-
-
-var draw = new Lottery({
-    id: '#lottery', //整个活动选择器控件
-    awardsSelector: '.lottery-unit', //奖项选择器
-    drawButton: '#logft', //点击抽奖按钮的选择器
-    notWin: '7', //空奖的值
-    nanNum: function() { //当抽奖次数为0的时候执行
-        $('.modal3').show();
-    },
-    okNum: function(that) { //当还有抽奖次数的时候执行
-        $.get("/json/currentPrize.json?v=" + new Date().getTime(), null,
-            function(data) { //获取奖品
-                $("#prize").html(data.MiaoShu);
-                that.extendConfig.setmyjiangpin.call(null);
-                that.prize = data.prize;
-                that.roll();
-            }, "json");
-        that.playnum = that.playnum - 1; //执行转盘了则次数减1
-        if (that.playnum <= 0) {
-            that.playnum = 0;
-        }
-        $('.playnum').html(that.playnum);
-    },
-    winElart: function(that) { //显示弹窗
-        if (that.prize == that.extendConfig.notWin) {
-            setTimeout("$('.modal2').show();", 2600);
-        } else {
-            setTimeout("$('.modal1').show();", 2600);
-        }
-    },
-    isLogin: function() { //检测是否登陆function
-        var islogin = false;
-        $.ajaxSetup({ //设置get同步请求
-            async: false
-        });
-        $.get("/json/login.json?v=" + new Date().getTime(), null,
-            function(data) {
-                if (data.result == 'ok') {
-                    islogin = true;
-                }
-            }, "json");
-        return islogin;
-    },
-    loadingGet: function(e) { //初始化加载ing...
-        //弹窗关闭
-        $('.modal_close').on('click', function() {
-            $('.modal').hide();
-        });
-        $.get("/json/login.json?v=" + new Date().getTime(), null,
-            function(data) {
-                if (data !== null && data.result == "ok") {
-                    e.playnum = data.shengyu; //初始次数，由后台传入
-                    $('.playnum').html(e.playnum);
-                }
-                return false;
-            }, "json");
-    },
-    setmyjiangpin: function() { //显示我获得的奖品
-        $.get("/json/myPrize.json?v=" + new Date().getTime(), null,
-            function(data) {
-                if (data !== null) {
-                    var lis = "";
-                    if (data.JiangXiangMingCheng1 && data.JiangXiangMingCheng1 != "谢谢参与") {
-                        lis += '<li><div class="list1">' + data.MM1 + '月' + data.Day1 + '日</div><div class="list2">' + data.JiangXiangMingCheng1 + '</div><div class="list3">' + data.MiaoShu1 + '</div></li>';
-                    }
-                    if (data.JiangXiangMingCheng2 && data.JiangXiangMingCheng2 != "谢谢参与") {
-                        lis += '<li><div class="list1">' + data.MM2 + '月' + data.Day2 + '日</div><div class="list2">' + data.JiangXiangMingCheng2 + '</div><div class="list3">' + data.MiaoShu2 + '</div></li>';
-                    }
-                    if (data.JiangXiangMingCheng3 && data.JiangXiangMingCheng3 != "谢谢参与") {
-                        lis += '<li><div class="list1">' + data.MM3 + '月' + data.Day3 + '日</div><div class="list2">' + data.JiangXiangMingCheng3 + '</div><div class="list3">' + data.MiaoShu3 + '</div></li>';
-                    }
-                    if (data.JiangXiangMingCheng4 && data.JiangXiangMingCheng4 != "谢谢参与") {
-                        lis += '<li><div class="list1">' + data.MM4 + '月' + data.Day4 + '日</div><div class="list2">' + data.JiangXiangMingCheng4 + '</div><div class="list3">' + data.MiaoShu4 + '</div></li>';
-                    }
-                    if (data.JiangXiangMingCheng5 && data.JiangXiangMingCheng5 != "谢谢参与") {
-                        lis += '<li><div class="list1">' + data.MM5 + '月' + data.Day5 + '日</div><div class="list2">' + data.JiangXiangMingCheng5 + '</div><div class="list3">' + data.MiaoShu5 + '</div></li>';
-                    }
-                    if (data.JiangXiangMingCheng6 && data.JiangXiangMingCheng6 != "谢谢参与") {
-                        lis += '<li><div class="list1">' + data.MM6 + '月' + data.Day6 + '日</div><div class="list2">' + data.JiangXiangMingCheng6 + '</div><div class="list3">' + data.MiaoShu6 + '</div></li>';
-                    }
-                    $("#myjiangpin").html(lis);
-                }
-                return false;
-            }, "json");
-    }
-});
+//完整调用方法：
+// var draw = new Lottery({
+//     id: '#lottery', //整个活动选择器控件
+//     awardsSelector: '.lottery-unit', //奖项选择器
+//     drawButton: '#logft', //点击抽奖按钮的选择器
+//     notWin: '7', //空奖的值
+//     nanNum: function() { //当抽奖次数为0的时候执行
+//         $('.modal3').show();
+//     },
+//     okNum: function(that) { //当还有抽奖次数的时候执行
+//         $.get("/json/currentPrize.json?v=" + new Date().getTime(), null,
+//             function(data) { //获取奖品
+//                 $("#prize").html(data.MiaoShu);
+//                 that.extendConfig.setmyjiangpin.call(null);
+//                 that.prize = data.prize;
+//                 that.roll();
+//             }, "json");
+//         that.playnum = that.playnum - 1; //执行转盘了则次数减1
+//         if (that.playnum <= 0) {
+//             that.playnum = 0;
+//         }
+//         $('.playnum').html(that.playnum);
+//     },
+//     winElart: function(that) { //显示弹窗
+//         if (that.prize == that.extendConfig.notWin) {
+//             setTimeout("$('.modal2').show();", 2600);
+//         } else {
+//             setTimeout("$('.modal1').show();", 2600);
+//         }
+//     },
+//     isLogin: function() { //检测是否登陆function
+//         var islogin = false;
+//         $.ajaxSetup({ //设置get同步请求
+//             async: false
+//         });
+//         $.get("/json/login.json?v=" + new Date().getTime(), null,
+//             function(data) {
+//                 if (data.result == 'ok') {
+//                     islogin = true;
+//                 }
+//             }, "json");
+//         return islogin;
+//     },
+//     loadingGet: function(e) { //初始化加载ing...
+//         //弹窗关闭
+//         $('.modal_close').on('click', function() {
+//             $('.modal').hide();
+//         });
+//         $.get("/json/login.json?v=" + new Date().getTime(), null,
+//             function(data) {
+//                 if (data !== null && data.result == "ok") {
+//                     e.playnum = data.shengyu; //初始次数，由后台传入
+//                     $('.playnum').html(e.playnum);
+//                 }
+//                 return false;
+//             }, "json");
+//     },
+//     setmyjiangpin: function() { //显示我获得的奖品
+//         $.get("/json/myPrize.json?v=" + new Date().getTime(), null,
+//             function(data) {
+//                 if (data !== null) {
+//                     var lis = "";
+//                     if (data.JiangXiangMingCheng1 && data.JiangXiangMingCheng1 != "谢谢参与") {
+//                         lis += '<li><div class="list1">' + data.MM1 + '月' + data.Day1 + '日</div><div class="list2">' + data.JiangXiangMingCheng1 + '</div><div class="list3">' + data.MiaoShu1 + '</div></li>';
+//                     }
+//                     if (data.JiangXiangMingCheng2 && data.JiangXiangMingCheng2 != "谢谢参与") {
+//                         lis += '<li><div class="list1">' + data.MM2 + '月' + data.Day2 + '日</div><div class="list2">' + data.JiangXiangMingCheng2 + '</div><div class="list3">' + data.MiaoShu2 + '</div></li>';
+//                     }
+//                     if (data.JiangXiangMingCheng3 && data.JiangXiangMingCheng3 != "谢谢参与") {
+//                         lis += '<li><div class="list1">' + data.MM3 + '月' + data.Day3 + '日</div><div class="list2">' + data.JiangXiangMingCheng3 + '</div><div class="list3">' + data.MiaoShu3 + '</div></li>';
+//                     }
+//                     if (data.JiangXiangMingCheng4 && data.JiangXiangMingCheng4 != "谢谢参与") {
+//                         lis += '<li><div class="list1">' + data.MM4 + '月' + data.Day4 + '日</div><div class="list2">' + data.JiangXiangMingCheng4 + '</div><div class="list3">' + data.MiaoShu4 + '</div></li>';
+//                     }
+//                     if (data.JiangXiangMingCheng5 && data.JiangXiangMingCheng5 != "谢谢参与") {
+//                         lis += '<li><div class="list1">' + data.MM5 + '月' + data.Day5 + '日</div><div class="list2">' + data.JiangXiangMingCheng5 + '</div><div class="list3">' + data.MiaoShu5 + '</div></li>';
+//                     }
+//                     if (data.JiangXiangMingCheng6 && data.JiangXiangMingCheng6 != "谢谢参与") {
+//                         lis += '<li><div class="list1">' + data.MM6 + '月' + data.Day6 + '日</div><div class="list2">' + data.JiangXiangMingCheng6 + '</div><div class="list3">' + data.MiaoShu6 + '</div></li>';
+//                     }
+//                     $("#myjiangpin").html(lis);
+//                 }
+//                 return false;
+//             }, "json");
+//     }
+// });
