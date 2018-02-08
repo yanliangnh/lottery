@@ -1,3 +1,9 @@
+/*
+ 2017/08/10 智取小师妹
+ QQ/微信：65268828
+ mail:yanliangnhai@163.com
+ Edition:v1.0 //2018-02-08
+ */
 ;
 (function(win) { //抽奖转盘
     function lottery() {
